@@ -9,6 +9,12 @@
   </head>
 
   <body>
+    <%# notice及alert為Rails提供的flash message helper, 會讀取controller中設定的flash[:notice]及flash[:alert]字串 %>
+    <%# 使用"devise"的話，"devise"直接幫忙做掉controller中的flash[:notice]及flash[:alert], 故此處view直接讀取即可 %>
+    <%# 用<p>去顯示flash message, 同時保留客製CSS型式的空間 %>
+    <p class="mew-customize-notice"><%= notice %></p>
+    <p class="mew-customize-alert"><%= alert %></p>
+
     <%= yield %>
   </body>
 </html>
