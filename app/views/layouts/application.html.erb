@@ -15,6 +15,18 @@
     <p class="mew-customize-notice"><%= notice %></p>
     <p class="mew-customize-alert"><%= alert %></p>
 
+
+    <%# current_user 是 Devise 定義的 helper method。如果請求進入網頁的人是在登入狀態，它會回傳一個 User instance；若沒有登入，就會回傳 nil %>
+    <% if current_user %>
+      Hi, <%= current_user.email %>
+      <%= link_to("登出", destroy_user_session_path, method: :delete) %>
+      <%= link_to('修改密碼', edit_user_registration_path) %>
+    <% else %>
+      <%= link_to('註冊', new_user_registration_path) %> |
+      <%= link_to('登入', new_user_session_path) %>
+    <% end %>
+
+
     <%= yield %>
   </body>
 </html>
