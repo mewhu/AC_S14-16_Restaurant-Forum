@@ -1,1 +1,12 @@
-<h1>餐廳後台</h1>
+<h1>Here's 餐廳後台</h1>
+<ul>
+  <% @restaurants.each do |restaurant| %>
+  <li>
+    <%= restaurant.name %>
+    <%= link_to 'Show', admin_restaurant_path %>
+    <%= link_to 'Edit', edit_admin_restaurant_path %>
+    <%= link_to 'Destroy', admin_restaurant_path, method: :delete, data: {confirm:"Are you sure?"} %>
+  </li>
+  <% end %>
+</ul>
+<%= link_to 'New', new_admin_restaurant_path %>
