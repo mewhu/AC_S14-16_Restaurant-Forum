@@ -4,7 +4,7 @@ class Admin::RestaurantsController < ApplicationController
   # 不甚合理：假設一個使用者的role="admin", 從127.0.0.1:3000 的登入頁面成功登入後只能留在餐廳前臺...
   before_action :authenticate_user!
   before_action :authenticate_admin
-  before_action :target_restaurant, only: [:show, :edit, :update]
+  before_action :target_restaurant, only: [:show, :edit, :update, :destroy]
 
   def index
     @restaurants = Restaurant.all
@@ -41,6 +41,11 @@ class Admin::RestaurantsController < ApplicationController
       flash[:alert] = "Fail to update a restaurant"
       render :action => :edit
     end
+  end
+
+  def destroy
+    @restaurant.destroy
+    redirect_to admin_restaurants_path
   end
 
   private
