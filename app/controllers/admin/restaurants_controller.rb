@@ -4,14 +4,13 @@ class Admin::RestaurantsController < ApplicationController
   # 不甚合理：假設一個使用者的role="admin", 從127.0.0.1:3000 的登入頁面成功登入後只能留在餐廳前臺...
   before_action :authenticate_user!
   before_action :authenticate_admin
-
+  before_action :target_restaurant, only: [:show, :edit, :update]
 
   def index
     @restaurants = Restaurant.all
   end
 
   def show
-    @restaurant = Restaurant.find(params[:id])
   end
 
   def new
@@ -25,12 +24,31 @@ class Admin::RestaurantsController < ApplicationController
       redirect_to admin_restaurants_path
     else
       flash[:alert] = "Fail to create a restaurant"
-      render :new
+      render :action => :new
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    # update == update_attributes
+    # 單數update_attribute == save(validate: false) : 會跳過驗證
+    if @restaurant.update_attributes(restaurant_params)
+      flash[:notice] = "Restaurant updated successfully"
+      redirect_to admin_restaurant_path(@restaurant)
+    else
+      flash[:alert] = "Fail to update a restaurant"
+      render :action => :edit
     end
   end
 
   private
   def restaurant_params
     params.require(:restaurant).permit(:name, :tel, :address, :opening_hour, :description)
+  end
+
+  def target_restaurant
+    @restaurant = Restaurant.find(params[:id])
   end
 end
