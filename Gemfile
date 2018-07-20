@@ -55,3 +55,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # install 'devise' for user authenticated login
 gem 'devise'
+
+# install 'carrierwave' for great image uploader
+gem 'carrierwave'
