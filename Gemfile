@@ -58,3 +58,6 @@ gem 'devise'
 
 # install 'carrierwave' for great image uploader
 gem 'carrierwave'
+
+# install 'FFaker'
+gem 'ffaker'
