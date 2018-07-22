@@ -9,23 +9,53 @@
   </head>
 
   <body>
+    
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Restaurant Forum</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="pull-right text-right nav navbar-nav">
+          <%# current_user 是 Devise 定義的 helper method。如果請求進入網頁的人是在登入狀態，它會回傳一個 User instance；若沒有登入，就會回傳 nil %>
+            <% if current_user %>
+              <li><p class="navbar-text">Hi, <%= current_user.email %></p></li>
+              <li><%= link_to("登出", destroy_user_session_path, method: :delete) %></li>
+              <li><%= link_to('修改密碼', edit_user_registration_path) %></li>
+            <% else %>
+              <li><%= link_to('註冊', new_user_registration_path) %></li>
+              <li><%= link_to('登入', new_user_session_path) %></li>
+            <% end %>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
     <%# notice及alert為Rails提供的flash message helper, 會讀取controller中設定的flash[:notice]及flash[:alert]字串 %>
     <%# 使用"devise"的話，"devise"直接幫忙做掉controller中的flash[:notice]及flash[:alert], 故此處view直接讀取即可 %>
-    <%# 用<p>去顯示flash message, 同時保留客製CSS型式的空間 %>
-    <p class="mew-customize-notice"><%= notice %></p>
-    <p class="mew-customize-alert"><%= alert %></p>
-
-
-    <%# current_user 是 Devise 定義的 helper method。如果請求進入網頁的人是在登入狀態，它會回傳一個 User instance；若沒有登入，就會回傳 nil %>
-    <% if current_user %>
-      Hi, <%= current_user.email %>
-      <%= link_to("登出", destroy_user_session_path, method: :delete) %>
-      <%= link_to('修改密碼', edit_user_registration_path) %>
-    <% else %>
-      <%= link_to('註冊', new_user_registration_path) %> |
-      <%= link_to('登入', new_user_session_path) %>
+    <%# 改成套用bootstrap的flash message %>
+    <% if flash[:notice] %>
+      <div class="container">
+        <div class="row">
+          <div class="alert alert-success"><%= notice %></div>     
+        </div>
+      </div>
+    <% elsif flash[:alert] %>
+      <div class="container">
+        <div class="row">
+          <div class="alert alert-danger"><%= alert %></div>
+        </div>
+      </div>
     <% end %>
-
 
     <%= yield %>
   </body>
