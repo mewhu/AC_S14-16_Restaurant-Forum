@@ -1,0 +1,15 @@
+要讀取放在 app/assets/images 目錄下的圖片時，要怎麼撰寫 src 屬性的值呢——使用 Rails 提供的 helper，這些 helper會優先至 app/assets/images 目錄下依檔名搜尋圖片
+，例如想產生 <img> HTML 標籤時：
+
+<%= image_tag("restaurant.jpg") %>
+
+or需要在 CSS 裡使用時，可以加上 image-url 或 url：
+
+body {
+        background-image: image-url("restaurant.jpg")
+     }
+或
+
+body {
+        background-image: url("restaurant.jpg")
+     }
