@@ -1,15 +1,36 @@
-要讀取放在 app/assets/images 目錄下的圖片時，要怎麼撰寫 src 屬性的值呢——使用 Rails 提供的 helper，這些 helper會優先至 app/assets/images 目錄下依檔名搜尋圖片
-，例如想產生 <img> HTML 標籤時：
+< [ihower講解Assets] https://ihower.tw/rails/assets-pipeline.html#sec1 >
+要讀取放在 app/assets/images 目錄下的圖片時，要怎麼撰寫 src 屬性的值呢?
+放在app/assets/images下的圖片該怎麼使用呢？在實際佈署後，Rails會將檔案名稱加以編碼，
+例如rails.png會變成rails-bd9ad5a560b5a3a7be0808c5cd76a798.png。這麼做的原因是當圖片有變更的時候，
+編碼就會不同而有不同的檔名，這樣就可以避免瀏覽器快取到舊的檔案。也因為檔案名稱會變動，所以放在app/assets/images下的圖片，
+要用的時候就沒有辦法寫死檔名。
+—>在一般的View中，可以使用image_tag這個Helper：
+        <%= image_tag("rails.png") %>
 
-<%= image_tag("restaurant.jpg") %>
+如果在CSS裡的話，有兩種辦法：一是將檔案命名為erb結尾，例如app/assets/stylesheets/main.css.erb，然後使用asset_path這個Helper：
+        h1 {
+        background-image: url('<%= asset_path("rails.png") %>');
+        }
 
-or需要在 CSS 裡使用時，可以加上 image-url 或 url：
+另一種方法是使用Sass或SCSS語法。其中SCSS相容於CSS。例如命名為app/assets/stylesheets/main.scss，然後使用image-url這個Sass提供的方法：
+        h1 {
+        background-image: image-url("rails.png")
+        }
 
-body {
-        background-image: image-url("restaurant.jpg")
-     }
-或
+如果是js檔案中想要拿圖片的位置，就只能用js.erb的格式，然後內嵌asset_path Helper方法了。
 
-body {
-        background-image: url("restaurant.jpg")
-     }
+其他 Helper
+Assets 提供了很多路徑 helper 來讓你指向你的 assets，可以在 erb 樣板中使用：
+        audio_path("horse.wav")   # => /audios/horse.wav
+        audio_tag("sound")        # => <audio src="/audios/sound" />
+        font_path("font.ttf")     # => /fonts/font.ttf
+        image_path("edit.png")    # => "/images/edit.png"
+        image_tag("icon.png")     # => <img src="/images/icon.png" alt="Icon" />
+        video_path("hd.avi")      # => /videos/hd.avi
+        video_tag("trailer.ogg")  # => <video src="/videos/trailer.ogg" />
+
+Sass 還提供了像是 -url 和 -path 這樣的 helper 來協助你，因此你可以在 scss 樣板中這樣使用：
+        image-url("rails.png")         # => url(/assets/rails.png)
+        image-path("rails.png")        # => "/assets/rails.png"
+        asset-url("rails.png", image)  # => url(/assets/rails.png)
+        asset-path("rails.png", image) # => "/assets/rails.png"
