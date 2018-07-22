@@ -9,4 +9,7 @@ Description:<%= @restaurant.description %><br>
 <% end %>
 <br>
 
+<%# 以下是麗鈴介紹的"回到上一頁" %>
+<%= link_to 'Back to last page', url_for(:back) %>
+
 <%= link_to 'Back to index', admin_restaurants_path %>

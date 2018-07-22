@@ -61,3 +61,6 @@ gem 'carrierwave'
 
 # install 'FFaker'
 gem 'ffaker'
+
+# install 'kaminari' for great pagging
+gem 'kaminari'
