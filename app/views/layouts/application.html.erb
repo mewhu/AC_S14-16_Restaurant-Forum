@@ -21,6 +21,7 @@
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="#">Restaurant Forum</a>
+          <%= link_to "餐廳評論網", root_path, class: "navbar-brand" %>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -28,6 +29,9 @@
           <ul class="pull-right text-right nav navbar-nav">
           <%# current_user 是 Devise 定義的 helper method。如果請求進入網頁的人是在登入狀態，它會回傳一個 User instance；若沒有登入，就會回傳 nil %>
             <% if current_user %>
+              <% if current_user.admin? %>
+                <li><%= link_to 'Admin後台', admin_restaurants_path %></li>
+              <% end %>
               <li><p class="navbar-text">Hi, <%= current_user.email %></p></li>
               <li><%= link_to("登出", destroy_user_session_path, method: :delete) %></li>
               <li><%= link_to('修改密碼', edit_user_registration_path) %></li>
