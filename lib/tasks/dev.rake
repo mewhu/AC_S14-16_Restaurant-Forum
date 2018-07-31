@@ -19,7 +19,11 @@ namespace :dev do
         opening_hours: FFaker::Time.datetime,
         tel: FFaker::PhoneNumber.short_phone_number,
         address: FFaker::Address.street_address,
-        description: FFaker::Lorem.paragraph
+        description: FFaker::Lorem.paragraph,
+
+        # 雖然Restaurant只有設定category_id作為外鍵，但在此可直接使用category作屬性，rails會自動判斷
+        # =>可以於new一個新"restaurant"時，使用"category.restaurants << restaurant"的寫法推導外鍵
+        category: Category.all.sample
       )
     end
   end  
