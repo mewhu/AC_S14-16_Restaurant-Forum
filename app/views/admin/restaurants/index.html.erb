@@ -13,6 +13,7 @@
         <thead>
           <tr>
             <th>ID#</th>
+            <th>Category</th>
             <th>Name</th>
             <th>Actions</th>
           </tr>
@@ -22,7 +23,7 @@
           <tr>
             <%# 直接寫td的話number#會是普通的黑字，沒有粗體突顯的效果 %>
             <th scope="row"><%= restaurant.id %></th>
-
+            <td><%= restaurant.category.name %></td>
             <td><%= restaurant.name %></td>
             <td>
               <%= link_to 'Show', admin_restaurant_path(restaurant) %>
