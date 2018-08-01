@@ -9,6 +9,21 @@
 <%#= form_for @restaurant, :url => admin_restaurants_path, :method => :post do |f| %>
 <%# 但是也可以不用寫:url及:method, 改用把@restaurant指定得更精確的寫法--> [:admin, @restaurant]：好處是重構時較方便, 都靠rails自己判斷new或edit即可 %>
 <%= form_for [:admin, @restaurant] do |f| %>
+  
+  <%# 原始第一個"object"參數 :restaurant 在此處可省略，因為collection_select有為form_for特別寫一個多型 %>
+  <%# 原始第六個"options"參數填prompt:true -> 在下拉式秀出"please select"的預設選項%>
+  <%# 原始第7個"html options"參數填入想要放的css效果, 此處引用bootstrap既有的class%>
+  <%= 
+    f.collection_select(
+      :category_id,
+      Category.all,
+      :id,
+      :name,
+      {prompt: true},
+      {class: "form-control"}
+    ) 
+  %>
+
   <%= f.label :name, "Name" %>
   <%= f.text_field :name %>
 
