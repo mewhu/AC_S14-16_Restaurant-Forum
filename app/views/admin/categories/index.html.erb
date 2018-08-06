@@ -2,6 +2,18 @@
   <h1>分類後台</h1>
   <%= link_to '餐廳後台', admin_restaurants_path %>
 
+  <div class="form-inline">
+    <%= form_for [:admin, @category] do |f| %>
+      <div class="form-group">
+        <%= f.text_field :name %>
+      </div>
+      <%= f.submit %>
+      <% if @category.errors.present? %>
+        <%= @category.errors.messages[:name].to_sentence %>
+      <% end %>
+    <% end %>
+  </div>
+
   <div class="row">
     <div class="col-md-6">
       <table class="table table-striped table-bordered">
