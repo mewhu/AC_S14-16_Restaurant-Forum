@@ -1,6 +1,8 @@
 class Admin::CategoriesController < ApplicationController
   before_action :authenticate_user!
   before_action :authenticate_admin
+  # 以下before-action中之內容是配合(MEW#1), 並搭配render算繪index.html樣板
+  # before_action :target_category, :only => [:edit, :update]
 
   def index
     # 算繪index.html.erb時，@categories及@category都是要準備好的
@@ -22,8 +24,30 @@ class Admin::CategoriesController < ApplicationController
     end
   end
 
+  # 以下edit-action中之內容是配合(MEW#1), 並搭配render算繪index.html樣板
+  # def edit
+  #   @categories = Category.all
+  #   render :action => :index
+  # end
+
+  # 以下update-action中之內容是配合(MEW#1), 並搭配render算繪index.html樣板
+  # def update
+  #   if @category.update_attributes(category_params)
+  #     flash[:notice] = "category updated successfully"
+  #     redirect_to admin_categories_path
+  #   else
+  #     flash[:alert] = "Fail to update a category"
+  #     render :action => :edit
+  #   end
+  # end
+
   private
   def category_params
     params.require(:category).permit(:name)
+  end
+
+  # 以下target_category用於before_action之中，依(MEW#1), 並搭配render算繪index.html樣板
+  def target_category
+    @category = Category.find(params[:id])
   end
 end

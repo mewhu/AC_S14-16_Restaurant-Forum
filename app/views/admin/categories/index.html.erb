@@ -21,6 +21,9 @@
           <tr>
             <th>Category ID#</th>
             <th>Category Name</th>
+
+            <%# 以下view中之內容是配合(MEW#1), 以edit-action+update-action配render-index.html樣板 %>
+            <%# <th>Action</th> %>
           </tr>
         </thead>
         <tbody>
@@ -29,6 +32,11 @@
             <%# 直接寫td的話number#會是普通的黑字，沒有粗體突顯的效果 %>
             <th scope="row"><%= category.id %></th>
             <td><%= category.name %></td>
+
+            <%# 以下view中之內容是配合(MEW#1), 以edit-action+update-action配render-index.html樣板 %>
+            <%# <td> %>
+              <%#= link_to 'Edit', edit_admin_category_path(category) %>
+            <%# </td> %>
           </tr>
           <% end %>
         </tbody>
