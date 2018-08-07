@@ -1,13 +1,20 @@
 class Admin::CategoriesController < ApplicationController
   before_action :authenticate_user!
   before_action :authenticate_admin
+  before_action :target_category, :only => [:update]
+
   # 以下before-action中之內容是配合(MEW#1), 並搭配render算繪index.html樣板
   # before_action :target_category, :only => [:edit, :update]
 
   def index
     # 算繪index.html.erb時，@categories及@category都是要準備好的
     @categories = Category.all
-    @category = Category.new
+    
+    if params[:id]
+      @category = Category.find(params[:id])
+    else
+      @category = Category.new
+    end
   end
 
   def create
@@ -19,6 +26,17 @@ class Admin::CategoriesController < ApplicationController
       flash[:alert] = "Could not create category"
 
       # 因為create不成功時要"直接去算繪(render)"index.html樣板，故此處需重新準備一份實例變數@categories
+      @categories = Category.all
+      render :action => :index
+    end
+  end
+
+  def update
+    if @category.update_attributes(category_params)
+      flash[:notice] = "category updated successfully"
+      redirect_to admin_categories_path
+    else
+      flash[:alert] = "Fail to update a category"
       @categories = Category.all
       render :action => :index
     end
