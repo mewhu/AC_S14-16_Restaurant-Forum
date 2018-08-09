@@ -1,6 +1,6 @@
-class Admin::CategoriesController < ApplicationController
+class Admin::CategoriesController < Admin::BaseController
   # before_action :authenticate_user!
-  before_action :authenticate_admin
+  # before_action :authenticate_admin
   before_action :target_category, :only => [:update, :destroy]
 
   # 以下before-action中之內容是配合(MEW#1), 並搭配render算繪index.html樣板
