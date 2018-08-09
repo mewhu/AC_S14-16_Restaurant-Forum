@@ -1,5 +1,5 @@
 class Admin::CategoriesController < ApplicationController
-  before_action :authenticate_user!
+  # before_action :authenticate_user!
   before_action :authenticate_admin
   before_action :target_category, :only => [:update, :destroy]
 
