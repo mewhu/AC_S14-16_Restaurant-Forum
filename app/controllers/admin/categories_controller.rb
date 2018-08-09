@@ -1,7 +1,7 @@
 class Admin::CategoriesController < ApplicationController
   before_action :authenticate_user!
   before_action :authenticate_admin
-  before_action :target_category, :only => [:update]
+  before_action :target_category, :only => [:update, :destroy]
 
   # 以下before-action中之內容是配合(MEW#1), 並搭配render算繪index.html樣板
   # before_action :target_category, :only => [:edit, :update]
@@ -40,6 +40,11 @@ class Admin::CategoriesController < ApplicationController
       @categories = Category.all
       render :action => :index
     end
+  end
+
+  def destroy
+    @category.destroy
+    redirect_to admin_categories_path
   end
 
   # 以下edit-action中之內容是配合(MEW#1), 並搭配render算繪index.html樣板
