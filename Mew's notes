@@ -34,3 +34,31 @@ Sass 還提供了像是 -url 和 -path 這樣的 helper 來協助你，因此你
         image-path("rails.png")        # => "/assets/rails.png"
         asset-url("rails.png", image)  # => url(/assets/rails.png)
         asset-path("rails.png", image) # => "/assets/rails.png"
+
+
+============================== 以下關於delegate用法(節錄自ihower) ===================================
+讓我們來修改 app/views/events/show.html.erb 可以顯示出 category 的名字：
+
+    <p>Category: <%= @event.category.name %></p>
+
+不過 @event.category 可能是 nil，這會導致 nil.name 發生錯誤。
+一個簡單的方式是改使用 
+
+    @event.category.try(:name)
+
+另一招則是在 Event model 加入以下程式，就會有 @event.category_name 可以使用，而且允許 @event.category 是 nil
+
+    delegate :name, :to => :category, :prefix => true, :allow_nil => true
+
+----------------------------- 關節的解讀 --------------------------------
+關節 2017-12-15 15:30
+
+我的認知是restaurant加了delegate :name, to: :category, allow_nil: true (沒有prefix)
+可以把category的"name" method直接拿來用，也就是@restaurant.name可直接取出該餐廳的類別名稱
+不過這樣他自己原本的.name就被作廢了，沒辦法取出餐廳名稱，所以加perfix
+加了prefix: true之後代表新方法名稱是用底線把category跟name連起來，即@restaurant.category_name，這樣就可以取出這個餐廳的類別
+也就是delegate :name, to: :category, prefix: true, allow_nil: true 
+再搭配@restaurant.category_name
+就可以在餐廳類別為nil的狀況下仍然顯示無礙
+
+
