@@ -11,7 +11,7 @@ class Admin::CategoriesController < ApplicationController
     @categories = Category.all
     
     if params[:id]
-      @category = Category.find(params[:id])
+      target_category
     else
       @category = Category.new
     end
