@@ -62,3 +62,13 @@ Sass 還提供了像是 -url 和 -path 這樣的 helper 來協助你，因此你
 就可以在餐廳類別為nil的狀況下仍然顯示無礙
 
 
+
+
+============================= 以下是heroku要重置postgre SQL的方法 ================================
+ 2004  heroku pg:reset DATABASE
+ 2005  heroku run rails db:migrate
+ 2006  heroku run rails dev:fake
+ 2007  heroku run rails db:seed
+ 2008  heroku run rails dev:fake
+ 2009  history
+
