@@ -21,6 +21,8 @@ namespace :dev do
         address: FFaker::Address.street_address,
         description: FFaker::Lorem.paragraph,
 
+        image: File.new(File.join(Rails.root, "/app/assets/images/photo_for_restaurant/food"+rand(1..30).to_s+".jpg")),
+
         # 雖然Restaurant只有設定category_id作為外鍵，但在此可直接使用category作屬性，rails會自動判斷
         # =>可以於new一個新"restaurant"時，使用"category.restaurants << restaurant"的寫法推導外鍵
         category: Category.all.sample
