@@ -1,3 +1,61 @@
+============================== 以下是關於Assets Pipeline ==============================
+< Mew's 體會 >
+image_tag的路徑主要有兩種推導模式
+模式一) image來源字串的首字不為"/", 此時的image_tag會以Assets Pipeline為預設搜尋的起點。(developement, production)=("專案/app/assets/image/", "專案/public/assets/")
+    ex:
+        image_tag("happy_time.jpg")
+        --> 以developement為例, 代表會去字串組合為  "專案/app/assets/images/" + "happy_time.jpg"  之處抓圖
+    or  
+        image_tag("holy-shit/lebron.png")
+        --> 以production為例, 代表會去字串組合為  "專案/public/assets/" + "holy-shit/lebron-(一串checksum的hash碼).png"  之處抓圖
+
+模式二) image來源字串的首字為"/", 此時的image_tag會以 "專案/public" 為預設搜尋的起點。
+    ex:
+        image_tag("/my-home/cat.jpg")
+        --> 代表會去字串組合為  "專案/public" + "/my-home/cat.jpg"  之處抓圖
+    or  
+        image_tag @restaurant.image.url (其中以carrierwave掛Uploader在restaurant.image上, 此時@restaurant.image.url會被設定成"/uploads/(...)/filename.jpg", 滿足首字為"/"條件)
+        --> 代表會去字串組合為  "專案/public" + "/uploads/(...)/filename.jpg"  之處抓圖
+
+
+
+
+< StackOverflow 網友 rorra >
+The only thing is to understand how image_tag works.
+
+Usually you put all your images, javscripts and stylesheests on the app/assets directory. When you work on the development environment, those files as served uncompressed, but when you deploy to production, the assets are precompiled, minified, and the result files are stored in public/assets.
+
+The idea behind minified assets, is just to make the requests faster for the clients, and to save bandwidth.
+
+Now, on the method image_tag, you can use an external path for the image, a local path for the image or a relative path for the image.
+
+When you do
+    <%= image_tag "http://www.mywebsite.com/image.jpg" %>
+it will use the absolute url for the image tag, and you will end with
+    <img src="http://www.mywebsite.com/image.jpg" />
+
+You can add a local path as well, like
+    <%= image_tag "/images/image.jpg" %>
+Which will end in
+    <img src="/images/image.jpg" />
+which is actually the issue you are having, because rails, when it precompiles the files, it puts everything within /public/assets, and you can access those files by going to the path /assets as the other users explained.
+
+So the code
+    <%= image_tag "/assets/image.jpg" %>
+actually works, because you end with
+    <img src="/assets/image.jpg" />
+
+The other thing you can do, is to use a relative path, i.e.
+    <%= image_tag "image.jpg" %>
+that will be converted to
+    <img src="/assets/image.jpg" />
+and that will work the same the last scenario.
+
+Nevertheless, on your application, you are going to let the users to upload their own images, this will happen later when you advance on the book, on a real world app, you will use a gem like paperclip or carrierwave
+
+
+
+
 < [ihower講解Assets] https://ihower.tw/rails/assets-pipeline.html#sec1 >
 要讀取放在 app/assets/images 目錄下的圖片時，要怎麼撰寫 src 屬性的值呢?
 放在app/assets/images下的圖片該怎麼使用呢？在實際佈署後，Rails會將檔案名稱加以編碼，
