@@ -9,7 +9,7 @@
 
           <%# judge whether the photo file exist in the current running Heroku server %>
           <%# if exist, display it. Or use a funny picture instead. %>
-          <% if File.exist?("publics"+restaurant.image.url) %>
+          <% if File.exist?("public"+restaurant.image.url) %>
             <%= image_tag restaurant.image.url, class: "img-responsive center-block" %>
           <% else %>
             <%# Rails 5 預設有跑Assets Pipeline, 以app/assets為例的話有三個pipeline目錄如下: %>
