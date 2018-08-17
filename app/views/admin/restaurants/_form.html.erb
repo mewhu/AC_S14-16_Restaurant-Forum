@@ -43,7 +43,7 @@
   <%# Rails物件的attribute都會自帶"?"方法，判斷是否有值 %>
   <% if @restaurant.image? %>
     <%# 用了"carrierwave"以後，最好用加上".url"的方式去access image，免得搭配(:thumb)調尺寸時會爆紅畫面 %>
-    <%= image_tag @restaurant.image.url width: '300px' %>
+    <%= image_tag @restaurant.image.url, width: '300px' %>
   <% end %>
   <%= f.file_field :image %>
 

@@ -6,7 +6,19 @@
     <% @restaurants.each do |restaurant| %>
       <div class="col-sm-6 col-md-4">
         <div class="restaurant-item">
-          <%= image_tag restaurant.image, class: "img-responsive center-block" %>
+
+          <%# judge whether the photo file exist in the current running Heroku server %>
+          <%# if exist, display it. Or use a funny picture instead. %>
+          <% if File.exist?("publics"+restaurant.image.url) %>
+            <%= image_tag restaurant.image.url, class: "img-responsive center-block" %>
+          <% else %>
+            <%# Rails 5 預設有跑Assets Pipeline, 以app/assets為例的話有三個pipeline目錄如下: %>
+            <%# 1. "app/assets/images", 2. "app/assets/javascripts", 3. "app/assets/stylesheets" %>
+            <%# 在deploy佈署時, Rails會將Assets Pipeline中的所有東西幫你做靜態連結+壓縮+以checksum命名檔案, 並打包到public/assets/之下 %>
+            <%# 而在.erb, .scss之類的文件內要取用Rails Assets Pipeline中的資料，需要以Rails的"helper"來取用 %>
+            <%= image_tag("mew_funny_pictures/save-woods.jpg", class: "img-responsive center-block") %>
+          <% end %>
+
           <div class="caption">
             <h3><%= link_to restaurant.name, restaurant_path(restaurant) %></h3>
             <p class="label label-default"><%= restaurant.category.name %><p>
