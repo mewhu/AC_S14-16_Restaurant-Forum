@@ -4,7 +4,7 @@ namespace :dev do
     # 先清掉所有資料
     Restaurant.destroy_all
 
-    30.times do |i|
+    60.times do |i|
       # "create" : 中途有錯不會停下來，待流程結束後由使用者自行判斷資料是否正常產生
       # "create!" : 中途有錯馬上停下來
       Restaurant.create!(

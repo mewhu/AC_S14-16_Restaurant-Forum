@@ -1,41 +1,12 @@
-<h1>餐廳前台</h1>
 <div class="container">
-  <%# 以下div中除了row以外, 配上一個display-flex -> 解決內部grid system的 column height mismatch layout crash issue %>
   <div class="row display-flex">
-    
-    <!-- restaurants list，有多寫restaurant-item的class style -->
-    <% @restaurants.each do |restaurant| %>
-      <div class="col-sm-6 col-md-4">
-        <div class="restaurant-item">
-
-          <%# judge whether the photo file exist in the current running Heroku server %>
-          <%# if exist, display it. Or use a funny picture instead. %>
-          <% if File.exist?("public"+restaurant.image.url) %>
-            <%= image_tag restaurant.image.url, class: "img-responsive center-block" %>
-          <% else %>
-            <%# Rails 5 預設有跑Assets Pipeline, 以app/assets為例的話有三個pipeline目錄如下: %>
-            <%# 1. "app/assets/images", 2. "app/assets/javascripts", 3. "app/assets/stylesheets" %>
-            <%# 在deploy佈署時, Rails會將Assets Pipeline中的所有東西幫你做靜態連結+壓縮+以checksum命名檔案, 並打包到public/assets/之下 %>
-            <%# 而在.erb, .scss之類的文件內要取用Rails Assets Pipeline中的資料，需要以Rails的"helper"來取用 %>
-            <%= image_tag("mew_funny_pictures/save-woods.jpg", class: "img-responsive center-block") %>
-          <% end %>
-
-          <div class="caption">
-            <h3><%= link_to restaurant.name, restaurant_path(restaurant) %></h3>
-            <p class="label label-default"><%= restaurant.category.name %><p>
-            <p><%= truncate(restaurant.description, length: 80) %></p>
-          </div>
-        </div>
-      </div>
-    <% end %>
-
-    <%# 補一個clearfix，以讓前面九格餐廳的資料與底部的kaminari paginate不會互相干擾造成跑版 %>
-    <div class="clearfix"></div>
-      
-    <!-- 有generate kaminari paginate bootstrap style -->
-    <div class="text-center">
-      <%= paginate @restaurants %>
-    </div>
-      
+    <ul class="nav nav-pills nav-pills-center">
+      <li class="active"><%= link_to "全部餐廳", root_path %></li>
+      <% @categories.each do |category| %>
+        <li><%= link_to category.name, category_path(category) %></li>
+      <% end %>
+    </ul>
   </div>
+
+  <%= render partial: "shared/restaurants_list" %>
 </div>

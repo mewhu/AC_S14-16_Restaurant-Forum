@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="row display-flex">
+    <ul class="nav nav-pills nav-pills-center">
+      <li><%= link_to "全部餐廳", root_path %></li>
+
+      <% @categories.each do |category| %>
+        <%# 以下產生各個li時, 會判斷該category的li是否就是當次使用者點選的@category, 進而加上class="active" %>
+        <li class="<%= "active" if category == @category %>">
+          <%= link_to category.name, category_path(category) %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  
+  <%= render partial: "shared/restaurants_list" %>
+</div>
