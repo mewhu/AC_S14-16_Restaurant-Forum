@@ -17,6 +17,9 @@ image_tag的路徑主要有兩種推導模式
         image_tag @restaurant.image.url (其中以carrierwave掛Uploader在restaurant.image上, 此時@restaurant.image.url會被設定成"/uploads/(...)/filename.jpg", 滿足首字為"/"條件)
         --> 代表會去字串組合為  "專案/public" + "/uploads/(...)/filename.jpg"  之處抓圖
 
+< 查看當前專案的Assets Pipeline列表 >
+(In Rails console)  Rails.application.config.assets.paths
+
 
 
 
