@@ -1,3 +1,16 @@
+============================= 以下是目前的controller structure ================================
+
+                                    ApplicationController  (authenticate_user!)
+                      ________________________|__________________________
+                     /\                                                  |
+                    /  \                                        Admin::BaseController  (authenticate_admin)
+                   /    \                                    ____________|_______________
+                  /      \                                  |                            |
+RestaurantsController  CategoriesController  Admin::RestaurantsController  Admin::CategoriesController
+
+
+
+
 ============================== 以下是關於Assets Pipeline ==============================
 < Mew's 體會 >
 image_tag的路徑主要有兩種推導模式
