@@ -1,6 +1,7 @@
 <h1>餐廳前台</h1>
 <div class="container">
-  <div class="row">
+  <%# 以下div中除了row以外, 配上一個display-flex -> 解決內部grid system的 column height mismatch layout crash issue %>
+  <div class="row display-flex">
     
     <!-- restaurants list，有多寫restaurant-item的class style -->
     <% @restaurants.each do |restaurant| %>

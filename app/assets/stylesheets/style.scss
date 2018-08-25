@@ -14,3 +14,13 @@
 .restaurant-item .caption {
   padding: 10px;
 }
+
+// 以下搭配於html內設定給 row-div 的新class特性 -> 可以解決 bootstrap3中grid system column height mismatch layout crash
+.row.display-flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+.row.display-flex > [class*='col-'] {
+  display: flex;
+  flex-direction: column;
+}
