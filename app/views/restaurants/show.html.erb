@@ -26,3 +26,21 @@
 
   </div>
 </div>
+
+<div class="container">
+  <div class="row">
+
+   <%# 因為在路由中是設定restaurant及comment為"Nested Resources"，所以@restaurant, @comment都要傳入 %>
+   <%# 否則form_for 會將使用者的資料，送去依"comments_path解譯，但其實並不存在"的路由，整個不正確!!! %>
+   <%# 再次提醒 : 我們期待的評論url為 --> /restaurants/:restaurant_id/comments(.:format) %>
+   <%= form_for [@restaurant, @comment] do |f| %>
+    <div class="form-group">
+      <%= f.text_area :content, placeholder: "留個言吧", class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.submit class: "btn btn-primary" %>
+      <%= f.button "Cancel", type: :reset, class: "btn btn-default" %>
+    </div>
+  <% end %>
+  </div>
+</div>
